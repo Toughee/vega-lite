@@ -10,7 +10,7 @@ import {EqualFilter, OneOfFilter, RangeFilter} from '../filter';
 import {Legend} from '../legend';
 import {hasDiscreteDomain, Scale} from '../scale';
 import {SortField, SortOrder} from '../sort';
-import {BaseSpec, Padding} from '../spec';
+import {BaseSpec} from '../spec';
 import {Transform} from '../transform';
 import {Formula} from '../transform';
 import {Dict, extend, vals} from '../util';
@@ -85,7 +85,6 @@ export abstract class Model {
   public readonly parent: Model;
   protected readonly name: string;
   public readonly description: string;
-  public readonly padding: Padding;
 
   public readonly data: Data;
 
@@ -99,13 +98,13 @@ export abstract class Model {
   protected sizeNameMap: NameMapInterface;
 
   protected readonly transform: Transform;
-  protected abstract readonly scales: Dict<Scale> = {};
+  protected readonly scales: Dict<Scale> = {};
 
-  protected abstract readonly axes: Dict<Axis> = {};
+  protected readonly axes: Dict<Axis> = {};
 
-  protected abstract readonly legends: Dict<Legend> = {};
+  protected readonly legends: Dict<Legend> = {};
 
-  public abstract readonly config: Config;
+  public readonly config: Config;
 
   public component: Component;
 
@@ -113,8 +112,9 @@ export abstract class Model {
 
   public abstract stack: StackProperties;
 
-  constructor(spec: BaseSpec, parent: Model, parentGivenName: string) {
+  constructor(spec: BaseSpec, parent: Model, parentGivenName: string, config: Config) {
     this.parent = parent;
+    this.config = config;
 
     // If name is not provided, always use parent's givenName to avoid name conflicts.
     this.name = spec.name || parentGivenName;
@@ -127,7 +127,6 @@ export abstract class Model {
     this.data = spec.data;
 
     this.description = spec.description;
-    this.padding = spec.padding;
     this.transform = spec.transform;
 
     if (spec.transform) {
@@ -140,7 +139,6 @@ export abstract class Model {
 
     this.component = {data: null, layout: null, mark: null, scales: null, axes: null, axisGroups: null, gridGroups: null, legends: null, selection: null};
   }
-
 
   public parse() {
     this.parseData();

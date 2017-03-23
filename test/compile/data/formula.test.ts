@@ -1,9 +1,9 @@
 /* tslint:disable:quotemark */
 import {assert} from 'chai';
 import {formula} from '../../../src/compile/data/formula';
-import {UnitModel} from '../../../src/compile/unit';
 import {Formula} from '../../../src/transform';
 import {Dict, hash} from '../../../src/util';
+import {parseUnitModel} from '../../util';
 
 describe('compile/data/formula', () => {
   describe('parseUnit', () => {
@@ -12,14 +12,14 @@ describe('compile/data/formula', () => {
         "as": "a",
         "expr": "5"
       };
-      const model = new UnitModel({
+      const model = parseUnitModel({
         "data": {"url": "a.json"},
         "transform": {
           "calculate": [f]
         },
         "mark": "point",
         "encoding": {}
-      }, null, '');
+      });
 
       const formulaComponent = formula.parseUnit(model);
       const hashed = hash(f);
