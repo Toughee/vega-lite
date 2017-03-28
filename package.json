@@ -10,6 +10,7 @@
   "homepage": "https://vega.github.io/vega-lite/",
   "description": "Vega-lite provides a higher-level grammar for visual analysis, comparable to ggplot or Tableau, that generates complete Vega specifications.",
   "main": "build/src/vl.js",
+  "browser": "vega-lite.js",
   "types": "build/src/vl.d.ts",
   "bin": {
     "vl2png": "./bin/vl2png",
